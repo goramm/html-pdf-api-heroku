@@ -7,7 +7,7 @@ class HomeController < ApplicationController
 
   # GET /home
   def index
-  	@error = "You didn't set up your environment variable. Please set up your ENV['API_TOKEN'] and come back." if ENV['API_TOKEN'].blank?
+  	@error = "You didn't set up API_TOKEN environment variable. Please set up the variable and refresh the page." if ENV['API_TOKEN'].blank?
   end
 
   def generate_pdf
@@ -17,8 +17,12 @@ class HomeController < ApplicationController
 		id = SecureRandom.uuid
 		callback_url = "#{request.base_url}/recieve_pdf/#{id}"
 		response = Hpa::Pdf.create(
+      :url => "#{request.base_url}/example.html",
 			:callback => callback_url,
-      :url => "#{request.base_url}/example.html"
+      :margin_top => 0,
+      :margin_right => 0,
+      :margin_bottom => 0,
+      :margin_left => 0
     )
 
 		cookies[:file_id] = id

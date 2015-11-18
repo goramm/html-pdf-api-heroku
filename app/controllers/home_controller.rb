@@ -18,12 +18,9 @@ class HomeController < ApplicationController
 		callback_url = "#{request.base_url}/recieve_pdf/#{id}"
 		response = Hpa::Pdf.create(
 			:callback => callback_url,
-      :html => "<!doctype html><html><head><title></title></head><body>Hello</body></html>"
+      :url => "#{request.base_url}/example.html"
     )
 
-    logger.info response
-
-		logger.info id
 		cookies[:file_id] = id
 
 		respond_to do |format|
@@ -35,8 +32,6 @@ class HomeController < ApplicationController
   def recieve_pdf
 
   	pdf_name = params[:id] + ".pdf"
-  	logger.info cookies[:file_id]
-
 
 		private_pdf_dir = 'public/uploads/pdf'
 		pdf_file_path = [private_pdf_dir, pdf_name].join("/")
@@ -56,15 +51,12 @@ class HomeController < ApplicationController
 
 		pdf_name = params[:id] + ".pdf"
 		
-		private_pdf_dir = 'public/uploads/pdf'
-		pdf_file_path = [private_pdf_dir, pdf_name].join("/")
-
+		pdf_file_path = ['public/uploads/pdf', pdf_name].join("/")
 
 		pdf_exists = File.exists? pdf_file_path
 
   	respond_to do |format|
 	    msg = { :status => "ok", :message => pdf_exists ? { status: 'Done', url: "#{request.base_url}/uploads/pdf/#{pdf_name}"} : 'Processing' }
-
 	    format.json  { render :json => msg }
 	  end
   end

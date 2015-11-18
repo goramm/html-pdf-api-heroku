@@ -36,6 +36,17 @@ $brand-language: #FFFFFF;
       margin-top: 20px;
     }
   }
+
 }
 
-
+.ajax{
+  //background-color: #c9302c !important;
+  i{
+    float: left;
+    display: block;
+    width: 16px;
+    height: 11px;
+    background: url(image_path("ajax-loader.gif")) no-repeat;
+    margin: 6px 10px 0 0;
+  }
+}

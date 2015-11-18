@@ -1,8 +1,10 @@
 {
-  "name": "Heroku Rails sample app",
-  "description": "A barebones Rails app, which can easily be deployed to Heroku",
-  "image": "heroku/ruby",
-  "repository": "https://github.com/heroku/ruby-getting-started",
-  "keywords": ["ruby", "rails" ],
+  "name": "Generate multipage PDF from Ruby on Rails",
+  "description": "When developing a web applications one of the main requirement is the ability to allow the user to download data in PDF format. But what if you have a bunch of data and don't want to block the user to use your application? This problem  can be solve by using HTML to PDF API service with callback URL.",
+  "keywords": ["generate pdf", "generate multipage pdf"],
+  "repository": "https://github.com/goramm/html-pdf-api-heroku.git",
+  "env": {
+    "API_TOKEN": ""
+  },
   "addons": [ "heroku-postgresql" ]
 }

@@ -8,8 +8,6 @@ class HomeController < ApplicationController
   # GET /home
   def index
   	@error = "You didn't set up your environment variable. Please set up your ENV['API_TOKEN'] and come back." if ENV['API_TOKEN'].blank?
-
-  	logger.info request.url
   end
 
   def generate_pdf
@@ -17,7 +15,7 @@ class HomeController < ApplicationController
 		Hpa.api_token = ENV['API_TOKEN']
 		
 		id = SecureRandom.uuid
-		callback_url = Rails.env.development? ? "http://zeus.effectiva.hr:9001/recieve_pdf/#{id}" : "https://#{request.host}/recieve_pdf/#{id}"
+		callback_url = "#{request.base_url}/recieve_pdf/#{id}"
 		response = Hpa::Pdf.create(
 			:callback => callback_url,
       :html => "<!doctype html><html><head><title></title></head><body>Hello</body></html>"
@@ -65,8 +63,7 @@ class HomeController < ApplicationController
 		pdf_exists = File.exists? pdf_file_path
 
   	respond_to do |format|
-
-	    msg = { :status => "ok", :message => pdf_exists ? 'Done' : 'Processing' }
+	    msg = { :status => "ok", :message => pdf_exists ? { status: 'Done', url: "#{request.base_url}/uploads/pdf/#{pdf_name}"} : 'Processing' }
 
 	    format.json  { render :json => msg }
 	  end

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
+  get 'test' => 'home#test'
   get 'generate_pdf' => 'home#generate_pdf'
   post 'generate_pdf' => 'home#generate_pdf'
   post 'recieve_pdf/:id' => 'home#recieve_pdf'

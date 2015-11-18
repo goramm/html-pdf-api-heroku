@@ -17,7 +17,7 @@ class HomeController < ApplicationController
 		Hpa.api_token = ENV['API_TOKEN']
 		
 		id = SecureRandom.uuid
-		callback_url = Rails.env.development? ? "http://zeus.effectiva.hr:9001/recieve_pdf/#{id}" : "https://#{request.url}/recieve_pdf/#{id}"
+		callback_url = Rails.env.development? ? "http://zeus.effectiva.hr:9001/recieve_pdf/#{id}" : "https://#{request.host}/recieve_pdf/#{id}"
 		response = Hpa::Pdf.create(
 			:callback => callback_url,
       :html => "<!doctype html><html><head><title></title></head><body>Hello</body></html>"

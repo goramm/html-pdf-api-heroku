@@ -1,13 +1,16 @@
 Rails.application.routes.draw do
-  resources :widgets
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
 
-  root 'welcome#index'
-  get 'about' => 'welcome#about'
+  root 'home#index'
+
+  get 'generate_pdf' => 'home#generate_pdf'
+  post 'generate_pdf' => 'home#generate_pdf'
+  post 'recieve_pdf/:id' => 'home#recieve_pdf'
+  get 'check/:id' => 'home#check'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

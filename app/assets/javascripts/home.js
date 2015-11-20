@@ -4,23 +4,39 @@ $(function(){
 
 	function check(){
 		var id = getCookie('file_id');
-		$.ajax('/check/'+id).done(function(data){
-			if(data.message.status == 'Done'){
+		$.get('/check/'+id).done(function(data){
+			if(data.status == 'Done'){
 				deleteCookie('file_id');
 				stopChecking();
-				window.location = data.message.url; // redirect to pdf file
+				// redirect or show message with link to pdf file
+				// window.location = data.url;
+				showDownloadMessage(data.url);
 			}
 		});
 	}
 
 	function startChecking(){
-		$('.generate_pdf').addClass('ajax btn-danger');
+		$('#notice').html('');
+		$('.generate-pdf span').text('PDF is generating');
+		$('.generate-pdf').addClass('ajax');
+		$('.generate-about').show();
 		timer = setInterval(check, 2000);
 	}
 
 	function stopChecking(){
-		$('.generate_pdf').removeClass('ajax');
+		$('.generate-pdf span').text('Generate PDF');
+		$('.generate-pdf').removeClass('ajax');
+		$('.generate-about').hide();
 		clearInterval(timer);
+	}
+
+	function showDownloadMessage(url){
+		var text  = [
+			'<span class="pdf">',
+			'<a class="btn btn-success" href="'+ url +'" target="_blank">Download 20 top reated movies</a>',
+			'</span>'
+		];
+		$('#notice').html(text.join(''));
 	}
 
 	function deleteCookie( name ) {
@@ -39,15 +55,35 @@ $(function(){
   }
 
   // start checking on click
-	$('.generate_pdf').click(function(e){
+	$('.generate-pdf').on('click', function(e){
 		e.preventDefault();
 		var $this = $(this);
 
 		if($this.hasClass('ajax')){ return; }
 
-		$.ajax('/generate_pdf').done(function(data){
+		$.post('/generate_pdf').done(function(data){
 			startChecking();
 		});
 	});
+
+	// show message to user
+	$('.container').on('click', '#notice a', function(e){
+  	$('#notice').html('');
+  });
+
+	// prevent user to change page
+	$('.nav a').on('click', function(e){
+		if($('#notice').html()){
+			e.preventDefault();
+			alert('You have new download content available.\nDownload it to continue.');
+		}
+	});
+
+	// show alert on refresh
+	window.onbeforeunload = function() {
+		if($('#notice').html()){
+    	return "You have new download content available.\nDownload it or you will loose it.";
+  	}
+  };
 
 });

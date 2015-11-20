@@ -11,7 +11,22 @@
 </head>
 <body>
 
-<%= yield %>
+	<nav class="navbar navbar-default navbar-static-top navbar-inverse">
+	  <div class="container">
+	    <ul class="nav navbar-nav">
+	      <li class="<%= 'active' if current_page?(root_path) %>">
+	        <a href="<%= root_path %>"><span class="glyphicon glyphicon-home"></span> Home</a>
+	      </li>
+	      <li class="<%= 'active' if current_page?(about_path) %>">
+	        <a href="<%= about_path %>"></span> About</a>
+	      </li>
+	    </ul>
+	  </div>
+	</nav>
+
+	<%= render 'shared/header' %>
+
+	<%= yield %>
 
 </body>
 </html>

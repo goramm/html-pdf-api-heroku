@@ -10,6 +10,10 @@ class HomeController < ApplicationController
   	@error = "You didn't set up API_TOKEN environment variable. Please set up the variable and refresh the page." if ENV['API_TOKEN'].blank?
   end
 
+  def about
+    
+  end
+
   def generate_pdf
 
 		Hpa.api_token = ENV['API_TOKEN']
@@ -60,7 +64,8 @@ class HomeController < ApplicationController
 		pdf_exists = File.exists? pdf_file_path
 
   	respond_to do |format|
-	    msg = { :status => "ok", :message => pdf_exists ? { status: 'Done', url: "#{request.base_url}/uploads/pdf/#{pdf_name}"} : 'Processing' }
+	     msg = pdf_exists ? { status: 'Done', url: "#{request.base_url}/uploads/pdf/#{pdf_name}" } : { status: 'Processing' }
+
 	    format.json  { render :json => msg }
 	  end
   end

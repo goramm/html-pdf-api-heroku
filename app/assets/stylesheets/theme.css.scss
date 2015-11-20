@@ -40,7 +40,8 @@ $brand-language: #FFFFFF;
 }
 
 .ajax{
-  //background-color: #c9302c !important;
+  background-color: #d9534f !important;
+  border-color: #d43f3a !important;
   i{
     float: left;
     display: block;
@@ -49,4 +50,21 @@ $brand-language: #FFFFFF;
     background: url(image_path("ajax-loader.gif")) no-repeat;
     margin: 6px 10px 0 0;
   }
+}
+
+#notice{
+  margin-top: 20px;
+  &:empty{
+    display: none;
+  }
+  .pdf{
+    display: inline-block;
+    padding-left: 40px;
+    line-height: 32px;
+    background: url(image_path("pdf.png")) no-repeat;
+  }
+}
+
+.generate-about{
+  display: none;
 }
